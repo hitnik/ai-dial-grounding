@@ -106,9 +106,8 @@ async def main():
             generate_response(
                 system_prompt=BATCH_SYSTEM_PROMPT,
                 user_message=USER_PROMPT.format(
-                    context=join_context(user_batch),
-                    query=user_question
-                )
+                    context=join_context(user_batch), query=user_question
+                ),
             )
             for user_batch in user_batches
         ]
@@ -116,7 +115,9 @@ async def main():
 
         print("\n--- Compiling results ---")
 
-        relevant_results = [result for result in batch_results if result.strip() != "NO_MATCHES_FOUND"]        
+        relevant_results = [
+            result for result in batch_results if result.strip() != "NO_MATCHES_FOUND"
+        ]
 
         print(f"\n=== SEARCH RESULTS ===")
 
@@ -125,7 +126,7 @@ async def main():
 
             await generate_response(
                 system_prompt=FINAL_SYSTEM_PROMPT,
-                user_message=f"SEARCH RESULTS:\n{combined_results}\n\nORIGINAL QUERY: {user_question}"
+                user_message=f"SEARCH RESULTS:\n{combined_results}\n\nORIGINAL QUERY: {user_question}",
             )
         else:
             print(f"\n=== SEARCH RESULTS ===")
@@ -136,6 +137,7 @@ async def main():
         print(f"\n=== Performance ===")
         print(f"Total API calls: {summary['batch_count']}")
         print(f"Total tokens: {summary['total_tokens']}")
+
 
 if __name__ == "__main__":
     asyncio.run(main())
